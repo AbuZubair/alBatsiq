@@ -14,7 +14,6 @@ switch($_GET[act]){
 	
 	case "purchaseOrderReceiveList";
 		include "purchaseOrderReceiveList.php";
-		
 	break;
 	
 	case"purchaseOrderReceiveNew";
@@ -23,6 +22,10 @@ switch($_GET[act]){
 	
 	case "purchaseOrderReceiveEdit";
 		include "purchaseOrderReceiveEdit.php";
+	break;
+	
+	case "purchaseOrderReturnList";
+		include "purchaseOrderReturnList.php";
 	break;
 }
 ?>
