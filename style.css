@@ -1,0 +1,507 @@
+body{
+	margin: 0;
+	padding: 0;
+	background: #fff;
+	color: #000;
+	font-family: Arial;
+	font-size: 15px;
+		
+}
+
+#uname {
+	text-transform: lowercase;
+}
+#container {
+	width: 100%;
+ 	height: 100%;
+ 	text-align:center;/* IE fix to center the page */
+ 	background: #fff;
+	position: relative;
+	
+}
+#wrapper {
+ 	width: 100%;
+	height: 64px;
+ 	background: #FFF;
+ 	margin: 0 auto;/* center the page in Firefox */
+ 	text-align: left;
+	position: relative;
+	background-color:black;
+}
+
+#header1{
+	float:left;
+	color:white;
+	position: relative;
+	left: 10%;
+}
+
+#header1 h1{
+	font-size:50px;
+	padding: 0;
+	margin : 0;
+}
+
+#header {
+	width: 100%;
+	position: relative;
+	right: 10%;
+	color: #000;
+	font-family: "Trebuchet MS",Tahoma, Arial, sans-serif;
+	
+}
+
+#footer {
+	height: 50px;
+	text-align: bottom;
+}
+
+#keterangan {
+	position: relative;
+	color: #fff;
+	text-align: right;
+}
+
+#keterangan a{
+	text-decoration:none;
+	color:white;
+	padding-top:10px;
+}
+
+#keterangan a:hover {
+    opacity:0.5;
+}
+
+#content {
+	position: relative;
+	color: #000;
+	text-align:center;
+	margin:0 10px;
+}
+
+#content table{
+	margin-left: auto;
+    margin-right: auto;
+	color: #000;
+	border-width: 1px;
+	border-style: solid;
+	border-collapse: collapse;
+	padding: 0.5em;
+	max-width: 100%;
+}
+#content table th, #content table td{
+	border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#content table th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #4CAF50;
+    color: white;
+}
+
+#content table tr:nth-child(even){background-color: #f2f2f2;}
+
+#content table tr:hover {background-color: #ddd;}
+
+#titlepage{
+	margin-bottom:10px;
+	text-align:left;
+	width:100%;
+}
+
+
+
+#titlepage h3{
+	display:inline;
+}
+
+#titlepage h3 a{
+	text-decoration: none;
+	border :2px solid black;
+	padding: 1px 2px;
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+
+input[type='number'] {
+    -moz-appearance:textfield;
+}
+
+nav {
+    float: left;
+    max-width: 30px;
+    margin: 0;
+    padding: 0;
+	text-align:left; 
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+nav ul li{
+    margin: 3px;
+}
+   
+nav ul a {
+    text-decoration: none;
+	 
+}
+
+article {
+    margin-left: 130px;
+    border-left: 1px solid gray;
+    padding: 1em;
+    overflow: hidden;
+}
+
+footer {
+    padding: 1em;
+    color: white;
+    background-color: #721856;
+    clear: left;
+    text-align: center;
+}
+
+.title-container{
+	width:100%;
+	height:auto;
+	display:inline-block;
+	margin-bottom:10px;
+	border-bottom:solid 2px black;
+}
+
+.txttitle h1{
+	margin-bottom:0;
+	float:left;
+}
+
+.search-container {
+	float: right;
+	position: relative;
+	top:2em;
+}
+
+.menu {
+	clear:both;
+    overflow: hidden;
+    background-color: #008CBA;
+    font-family: Arial;
+	padding-right:5%;
+	margin-top:10px;
+}
+
+
+.menu a {
+    float: left;
+    font-size: 15px;
+    color: white;
+    text-align: center;
+    padding: 16px 16px;
+    text-decoration: none;
+	height:auto;
+}
+
+.menu a:hover {
+    opacity:0.5;
+}
+
+.dropdown {
+    float: left;
+    overflow: hidden;
+}
+
+.dropdown .dropbtn {
+    font-size: 15px;    
+    border: none;
+    outline: none;
+    color: white;
+    padding: 14px 16px;
+    background-color: inherit;
+}
+
+.container a:hover, .dropdown:hover .dropbtn {
+    opacity:0.5;
+}
+
+.dropdown-content, .dropdown-content-sub {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-submenu .dropbtn2{
+	float: none;
+	font-size: 15px;    
+    
+    outline: none;
+    color: black;
+    padding: 12px 16px;
+    background-color: inherit;
+	display: block;
+	text-align: left;
+}
+
+.dropdown-content a{
+    float: none;
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+	border-bottom:1px solid #ddd;
+}
+
+.dropdown-content a:hover{
+    background-color: #ddd;
+}
+
+.dropdown:hover .dropdown-content{
+    display: block;
+}
+
+.dropdown-submenu .dropdown-content-sub{
+	display: none;
+	top: 0;
+    left: 100%;
+    margin-top: -1px;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content-sub a:hover{
+    background-color: #ddd;
+}
+
+.dropdown-submenu:hover .dropdown-content-sub{
+    display: block;
+}
+
+.content-left{
+	float:left;
+	width:49%;
+	height:auto;
+}
+
+.content-right{
+	float:right;
+	width:45%;
+	height:auto;
+}
+
+.titlechild{
+	text-align:right; 
+	width:40%; 
+	color:white;
+	background-color:#001f3f;
+}
+
+.grad{
+	position: absolute;
+	top: -20px;
+	left: -20px;
+	right: -40px;
+	bottom: -40px;
+	width: auto;
+	height: auto;
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0)), color-stop(100%,rgba(0,0,0,0.65))); /* Chrome,Safari4+ */
+	z-index: 1;
+	opacity: 0.7;
+}
+
+.header{
+	position: absolute;
+	top: calc(48% - 140px);
+	left: calc(41% - 180px);
+	z-index: 2;
+}
+
+.header div{
+	float: left;
+	color: #FF8C00;
+	font-family: 'Exo', sans-serif;
+	font-size: 75px;
+	font-weight: 200;
+}
+
+/*
+.logo{
+	position: absolute;
+	top: calc(50% - 140px);
+	left: calc(50% - 180px);
+	z-index: 2;
+}
+*/
+
+.header div span{
+	color: #72325b !important;
+}
+
+.logout{
+	position: absolute;
+	top: calc(50% - 130px);
+	left: calc(52% - 110px);
+	height: 150px;
+	width: 400px;
+	padding: 10px;
+	z-index: 2;
+	color: #000;
+	text-align:center;
+}
+.login{
+	position: absolute;
+	top: calc(50% - 160px);
+	left: calc(50% - 50px);
+	height: 150px;
+	width: 350px;
+	padding: 10px;
+	z-index: 2;
+}
+
+.login input[type=text]{
+	width: 250px;
+	height: 30px;
+	background: transparent;
+	border: 1px solid #000;
+	border-radius: 2px;
+	color: #000;
+	font-family: 'Exo', sans-serif;
+	font-size: 16px;
+	font-weight: 400;
+	padding: 4px;
+}
+
+.login input[type=password]{
+	width: 250px;
+	height: 30px;
+	background: transparent;
+	border: 1px solid #000;
+	border-radius: 2px;
+	color: #000;
+	font-family: 'Exo', sans-serif;
+	font-size: 16px;
+	font-weight: 400;
+	padding: 4px;
+	margin-top: 10px;
+}
+
+.login button{
+	width: 260px;
+	height: 35px;
+	background: #ccc;
+	border: 1px solid #ccc;
+	cursor: pointer;
+	border-radius: 2px;
+	color: #000;
+	font-family: 'Exo', sans-serif;
+	font-size: 16px;
+	font-weight: 400;
+	padding: 6px;
+	margin-top: 10px;
+}
+
+.login button:hover{
+	opacity: 0.8;
+}
+
+.login button:active{
+	opacity: 0.6;
+	border: 1px solid #000;
+}
+
+.login input[type=text]:focus{
+	outline: none;
+	border: 1px solid #000;
+}
+
+.login input[type=password]:focus{
+	outline: none;
+	border: 1px solid #000;
+}
+
+.login button:focus{
+	outline: none;
+}
+
+.button {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+.button2 {
+    background-color: white; /* Green */
+    border: none;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.button3 {
+    background-color: white; /* Green */
+    border: none;
+	text-align: left;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.button-record{
+	background-color: transparent;
+	color:white;
+	font-size: 15px;
+	 border: none;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.link {
+	color: black;
+}
+
+.link2{
+	outline:none;
+	background:none;
+	cursor:pointer;
+	color:black;
+	padding:1px 2px;
+	text-decoration:none;
+	border :2px solid black;
+}
+
+.link:hover, .link2:hover, .button2:hover {
+	opacity: 0.2;
+}
+
+
+::-webkit-input-placeholder{
+   color: rgba(255,255,255,0.6);
+}
+
+::-moz-input-placeholder{
+   color: rgba(255,255,255,0.6);
+}
