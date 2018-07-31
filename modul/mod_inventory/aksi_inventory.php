@@ -188,7 +188,7 @@
 		} else{
 			mysql_query("insert into item_transaction (TRANSACTION_NO,TRANSACTION_CODE,TRANSACTION_DATE,CHARGE_AMOUNT,NOTE,REFERENCE_NO,IS_COMPLETE)  values ('$pornumber','002','$tglskg','$sum','$note','$ref',0)");
 		}
-		header('location:../../albatsiq.php?module=inventory&act=purchaseOrderReceiveList');	
+		header('location:../../albatsiq.php?module=inventory&act=purchaseOrderReceiveList&page=1');	
 		
 	} else if ($_GET['act'] == 'editPOR'){
 		$numrow = $_GET['id'];
@@ -256,6 +256,70 @@
 		mysql_query("update item_transaction set CHARGE_AMOUNT = '$sum' where TRANSACTION_NO='$pornumber'");
 				
 		header("location:../../albatsiq.php?module=view&act=purchaseOrderReceive&id=$pornumber");	
+		
+	} else if ($_GET['act'] == 'addRET'){
+		$tgl = $_POST['tgl'];
+		$date = explode("-",$tgl);
+		$tglskg = date("$date[2]-$date[1]-$date[0]");
+		$retnumber = $_POST['retnumber'];
+		$note = $_POST['note'];
+		$jmlcell=$_POST['jmlcell'];
+		$ref = $_POST['referenceNo'];
+		$sum = 0;
+		
+			for($i=0;$i<=$jmlcell;$i++){
+			
+			$index1="itemID".$i;
+			$itemID = explode(" ",$_POST[$index1]);	
+			$itemIDs[$i] = $itemID[0];		
+			$check[$i]=!empty($itemIDs[$i]);
+						
+			$index2="qty".$i;
+			$qty[$i]=$_POST[$index2];
+			
+			$index3="satuan".$i;
+			$satuan[$i]=$_POST[$index3];
+			
+			$index4="knv".$i;
+			$konversi[$i]=$_POST[$index4];
+			
+			$index5="harga".$i;
+			$harga[$i]=$_POST[$index5];
+			
+			$sum += $harga[$i];
+			
+		}	
+		
+		for($i=0;$i<=$jmlcell;$i++)
+		{
+			if($check[$i] == 1){
+				mysql_query ("Insert into item_transaction_detail (TRANSACTION_NO,ITEM_ID,QUANTITY,SATUAN,KONVERSI,HARGA,REFERENCE_NO)  values ('$retnumber','$itemIDs[$i]','$qty[$i]','$satuan[$i]','$konversi[$i]','$harga[$i]','$ref')");
+				
+				$cekhargabeli = mysql_query("select item.ITEM_ID,
+											item.SATUAN_BELI,
+											item_transaction_detail.TRANSACTION_NO,
+											item_transaction_detail.QUANTITY,
+											item_transaction_detail.SATUAN,
+											item_transaction_detail.KONVERSI,
+											item_transaction_detail.HARGA
+											from item_transaction_detail left join item on item.ITEM_ID = item_transaction_detail.ITEM_ID 
+											where item_transaction_detail.ITEM_ID = '$itemIDs[$i]' and item_transaction_detail.TRANSACTION_NO = '$retnumber'
+									");
+				$hargabeli = mysql_fetch_array($cekhargabeli);	
+			}		
+		}
+		
+		$cekpocomplete = mysql_query("SELECT DISTINCT ITEM_ID FROM item_transaction_detail WHERE TRANSACTION_NO = '$ref' AND ITEM_ID NOT IN ( SELECT DISTINCT ITEM_ID FROM item_transaction_detail where REFERENCE_NO = '$ref' )");
+		$numrowcek = mysql_num_rows($cekpocomplete);
+		
+		echo $numrowcek;
+		
+		if($numrowcek == 0){
+			mysql_query("insert into item_transaction (TRANSACTION_NO,TRANSACTION_CODE,TRANSACTION_DATE,CHARGE_AMOUNT,NOTE,REFERENCE_NO,IS_COMPLETE)  values ('$retnumber','003','$tglskg','$sum','$note','$ref',1)");
+		} else{
+			mysql_query("insert into item_transaction (TRANSACTION_NO,TRANSACTION_CODE,TRANSACTION_DATE,CHARGE_AMOUNT,NOTE,REFERENCE_NO,IS_COMPLETE)  values ('$retnumber','003','$tglskg','$sum','$note','$ref',0)");
+		}
+		header('location:../../albatsiq.php?module=inventory&act=purchaseOrderReturnList&page=1');	 
 		
 	}
 	

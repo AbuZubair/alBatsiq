@@ -37,7 +37,7 @@
 						</tr>
 						<tr>
 							<td class='titlechild'>Receive Order No.</td>
-							<td><input id='insertReferenceRetNo' type='text' readonly='readonly'><button onclick='outstandingReturn()' style='background-color: #008CBA;'>Outstanding</button>
+							<td><input id='insertReferenceNo' type='text' readonly='readonly'><button onclick='outstandingReturn()' style='background-color: #008CBA;'>Outstanding</button>
 							<button onclick='ResetOutstanding()' style='background-color: #008CBA;'>Reset</button></td>
 						</tr>
 					</table>
@@ -113,7 +113,7 @@
 					</table>
 					<form method=POST action='modul/mod_inventory/aksi_inventory.php?act=addRET' id='form1' onsubmit='return setValue()'>
 						<table width='100%' id='record'>
-							<input type='hidden' name='pornumber' id='pornumber' value='POR/$tahun/$bulan/$num'>
+							<input type='hidden' name='retnumber' id='retnumber' value='RET/$tahun/$bulan/$num'>
 							<input type='hidden' value='$tglskg' name='tgl' readonly='readonly'>
 							<input type='hidden' name='referenceNo' id='referenceNo'>
 							<input type='hidden' name='jmlcell' id='jmlcell'>
@@ -141,7 +141,7 @@
 			var table = document.getElementById("record");
 			var rowCount = table.rows.length;
 		if(rowCount == 0){
-				document.getElementById('insertReferenceRetNo').value = nilai;
+				document.getElementById('insertReferenceNo').value = nilai;
 							
 				var vals = nilai;
 				 var xhr;
@@ -186,8 +186,7 @@
 						width6.value = "10%";
 						cell6.setAttributeNode(width6);
 						
-						
-						
+											
 						var input = document.createElement("input");
 						cell1.appendChild(input);
 						var name = document.createAttribute("name");
