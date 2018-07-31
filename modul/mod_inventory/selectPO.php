@@ -4,6 +4,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <link rel="stylesheet" href="/resources/demos/style.css">
+  <link rel="stylesheet" href="../../css/bootstrap.min.css">
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -66,12 +67,24 @@ table th {
 table tr:nth-child(even){background-color: #f2f2f2;}
 
 table tr:hover {background-color: #ddd;}
+
+button{
+	background-color: #008CBA;
+	position:absolute;
+	left:50%;
+	bottom:5%;
+	padding:5px 15px;
+}
 </style>
 
 </head>
 
 <?php
 	include "../../config/koneksi.php";
+
+	$limit = 6;  
+	if (isset($_GET["page"])) { $page  = $_GET["page"]; } else { $page=1; };  
+	$start_from = ($page-1) * $limit;
 	
 	$date = date("m/d/Y");
 	echo "
@@ -96,7 +109,7 @@ table tr:hover {background-color: #ddd;}
 	
 	";
 	if($_GET['id'] == 'default'){
-	$cekpofirst = mysql_query("SELECT DISTINCT * FROM item_transaction WHERE TRANSACTION_CODE = '001' AND TRANSACTION_NO NOT IN ( SELECT DISTINCT REFERENCE_NO FROM item_transaction where IS_COMPLETE = 1 )");
+	$cekpofirst = mysql_query("SELECT DISTINCT * FROM item_transaction WHERE TRANSACTION_CODE = '001' AND TRANSACTION_NO NOT IN ( SELECT DISTINCT REFERENCE_NO FROM item_transaction where IS_COMPLETE = 1 )LIMIT $start_from, $limit");
 	$numrowfirst = mysql_num_rows($cekpofirst);
 	if($numrowfirst != 0){
 		while($po = mysql_fetch_array($cekpofirst)){
@@ -116,6 +129,54 @@ table tr:hover {background-color: #ddd;}
 					<button onclick='sendValue($numrowfirst)' style='background-color: #008CBA;'>OK</button>
 			";
 		}
+			echo"	<ul class='pagination'>";
+				
+					
+			if ($page == 1) { // Jika page adalah pake ke 1, maka disable link PREV
+			echo"
+				<li class='disabled'><a href='#'>First</a></li>
+				<li class='disabled'><a href='#'>&laquo;</a></li> ";
+			
+			} else { // Jika buka page ke 1
+				$link_prev = ($page > 1) ? $page - 1 : 1;
+			echo"
+				<li><a href='selectPO.php?id=default&page=1'>First</a></li>
+				<li><a href='selectPO.php?id=default&page=$link_prev'>&laquo;</a></li>
+			";
+			}
+		
+
+		
+			// Buat query untuk menghitung semua jumlah data
+			$resut =  mysql_query("SELECT DISTINCT * FROM item_transaction WHERE TRANSACTION_CODE = '001' AND TRANSACTION_NO NOT IN ( SELECT DISTINCT REFERENCE_NO FROM item_transaction where IS_COMPLETE = 1 )");
+			$row = mysql_num_rows($resut);    
+			$jumlah_page = ceil($row / $limit);
+			$jumlah_number = 3; // Tentukan jumlah link number sebelum dan sesudah page yang aktif
+			$start_number = ($page > $jumlah_number) ? $page - $jumlah_number : 1; // Untuk awal link member
+			$end_number = ($page < ($jumlah_page - $jumlah_number)) ? $page + $jumlah_number : $jumlah_page; // Untuk akhir link number
+			for ($i = $start_number; $i <= $end_number; $i++) {
+				$link_active = ($page == $i) ? 'class="active"' : '';
+			echo" <li $link_active><a href=selectPO.php?id=default&page=".$i.">".$i."</a></li>";
+			}
+		
+
+		
+			// Jika page sama dengan jumlah page, maka disable link NEXT nya
+			// Artinya page tersebut adalah page terakhir
+			if ($page == $jumlah_page) { // Jika page terakhir
+			echo"
+				<li class='disabled'><a href='#'>&raquo;</a></li>
+				<li class='disabled'><a href='#'>Last</a></li>
+			";
+			} else { // Jika bukan page terakhir
+				$link_next = ($page < $jumlah_page) ? $page + 1 : $jumlah_page;
+			echo"
+				<li><a href='selectPO.php?id=default&page=$link_next'>&raquo;</a></li>
+				<li><a href='selectPO.php?id=default&page=$jumlah_page'>Last</a></li>
+			";
+			}
+	echo"         
+	</ul>";
 	}
 	
 	if($_GET['id'] == 'search'){

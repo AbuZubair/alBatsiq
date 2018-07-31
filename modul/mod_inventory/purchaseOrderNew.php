@@ -21,7 +21,7 @@
 							<h1>Purchase Order</h1>
 						</div>
 					</div>
-						<h3><a href=albatsiq.php?module=inventory&act=purchaseOrderList class='link'>Back</a></h3>
+						<h3><a href=albatsiq.php?module=inventory&act=purchaseOrderList&page=1 class='link'>Back</a></h3>
 			</div>
 			
 			<div id='wrapper-master'>

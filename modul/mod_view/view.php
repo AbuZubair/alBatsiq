@@ -192,7 +192,7 @@ switch($_GET[act]){
 							<h1>Purchase Order</h1>
 						</div>
 					</div>
-						<h3><a href=albatsiq.php?module=inventory&act=purchaseOrderList class='link'>Back</a></h3>";
+						<h3><a href=albatsiq.php?module=inventory&act=purchaseOrderList&page=1 class='link'>Back</a></h3>";
 					if($purchaseOrderRow != 0){	
 					echo"
 						<h3><a href=albatsiq.php?module=inventory&act=purchaseOrderEdit&id=$id class='link'>Edit</a></h3>";

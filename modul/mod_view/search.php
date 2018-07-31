@@ -361,7 +361,7 @@ switch($_GET[act]){
 							 </div>
 					</div>
 					<h3><a href=albatsiq.php?module=inventory&act=purchaseOrderNew class='link'>New</a></h3>
-					<h3><a href=albatsiq.php?module=inventory&act=purchaseOrderList class='link'>Back</a></h3>
+					<h3><a href=albatsiq.php?module=inventory&act=purchaseOrderList&page=1 class='link'>Back</a></h3>
 				</div>
 				
 				

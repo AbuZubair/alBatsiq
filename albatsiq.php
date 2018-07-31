@@ -86,9 +86,9 @@ else{
 						<div class='dropdown-submenu'>
 							<a class='dropbtn2' tabindex='-1' href='#'>Transaksi Item</a>
 								<div class='dropdown-content-sub'>
-									<a href=albatsiq.php?module=inventory&act=purchaseOrderList>Purchase Order</a>
-									<a href=albatsiq.php?module=inventory&act=purchaseOrderReceiveList>Purchase Order Receive</a>
-									<a href=albatsiq.php?module=inventory&act=purchaseOrderReturnList>Purchase Order Return</a>
+									<a href=albatsiq.php?module=inventory&act=purchaseOrderList&page=1>Purchase Order</a>
+									<a href=albatsiq.php?module=inventory&act=purchaseOrderReceiveList&page=1>Purchase Order Receive</a>
+									<a href=albatsiq.php?module=inventory&act=purchaseOrderReturnList&page=1>Purchase Order Return</a>
 								</div>
 						</div>
 						<a href=albatsiq.php?module=inventory&act=distribusi>Distribusi</a>

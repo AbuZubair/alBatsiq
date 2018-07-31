@@ -5,7 +5,7 @@
 	$sekarang = date_create($date);
 	$tgl = explode("-",$date);
 	$tglskg = date("$tgl[2]-$tgl[1]-$tgl[0]");
-	$cek = mysql_query("SELECT * FROM item_transaction where TRANSACTION_CODE = '002' and TRANSACTION_DATE LIKE '$tahun-$bulan%'");
+	$cek = mysql_query("SELECT * FROM item_transaction where TRANSACTION_CODE = '003' and TRANSACTION_DATE LIKE '$tahun-$bulan%'");
 	$numrow = mysql_num_rows($cek);
 	$tambah = $numrow + 1; 
 	$num = sprintf("%04d", $tambah);
@@ -18,26 +18,26 @@
 			<div id='titlepage'>
 					<div class = 'title-container'>
 						<div class = 'txttitle'>
-							<h1>Purchase Order Receive</h1>
+							<h1>Purchase Order Return</h1>
 						</div>
 					</div>
-						<h3><a href=albatsiq.php?module=inventory&act=purchaseOrderReceiveList class='link'>Back</a></h3>
+						<h3><a href=albatsiq.php?module=inventory&act=purchaseOrderReturnList class='link'>Back</a></h3>
 			</div>
 			
 			<div id='wrapper-master'>
 				<div class='content-left'>
 					<table width='100%'>
 						<tr>
-							<td class='titlechild'>Receive No.</td>
-							<td><input type='text' name='pornumber' id='pornumber' value='POR/$tahun/$bulan/$num' disabled></td>
+							<td class='titlechild'>Return No.</td>
+							<td><input type='text' name='retnumber' id='retnumber' value='RET/$tahun/$bulan/$num' disabled></td>
 						</tr>
 						<tr>
-							<td class='titlechild'>Receive Date</td>
+							<td class='titlechild'>Return Date</td>
 							<td><input type='text' value='$tglskg' name='tgl' readonly='readonly'></td>
 						</tr>
 						<tr>
-							<td class='titlechild'>Purchase Order No.</td>
-							<td><input id='insertReferenceNo' type='text' readonly='readonly'><button onclick='outstanding()' style='background-color: #008CBA;'>Outstanding</button>
+							<td class='titlechild'>Receive Order No.</td>
+							<td><input id='insertReferenceRetNo' type='text' readonly='readonly'><button onclick='outstandingReturn()' style='background-color: #008CBA;'>Outstanding</button>
 							<button onclick='ResetOutstanding()' style='background-color: #008CBA;'>Reset</button></td>
 						</tr>
 					</table>
@@ -111,7 +111,7 @@
 							</td>
 						</tr>
 					</table>
-					<form method=POST action='modul/mod_inventory/aksi_inventory.php?act=addPOR' id='form1' onsubmit='return setValue()'>
+					<form method=POST action='modul/mod_inventory/aksi_inventory.php?act=addRET' id='form1' onsubmit='return setValue()'>
 						<table width='100%' id='record'>
 							<input type='hidden' name='pornumber' id='pornumber' value='POR/$tahun/$bulan/$num'>
 							<input type='hidden' value='$tglskg' name='tgl' readonly='readonly'>
@@ -128,21 +128,20 @@
 			";
 			
 ?>
-
 <script>
-	function outstanding(){
+    function outstandingReturn(){
 		var date = "<?php echo $date ?>";
 		var res = date.split("-");
 		var newdate = res[1]+"/"+res[1]+"/"+res[0];
-		window.open("modul/mod_inventory/selectPO.php?id=default&page=1", "popuppage", "width=500,height=600,toolbar=no,scrollbars=yes,location=no,statusbar=no,menubar=no,resizable=yes,fullscreen=no");
+		window.open("modul/mod_inventory/selectPOR.php?id=default&page=1", "popuppage", "width=500,height=600,toolbar=no,scrollbars=yes,location=no,statusbar=no,menubar=no,resizable=yes,fullscreen=no");
 	}
-	
-	function updateValue(nilai){
+
+    function updateValuePOR(nilai){
     // this gets called from the popup window and updates the field with a new value		
 			var table = document.getElementById("record");
 			var rowCount = table.rows.length;
 		if(rowCount == 0){
-				document.getElementById('insertReferenceNo').value = nilai;
+				document.getElementById('insertReferenceRetNo').value = nilai;
 							
 				var vals = nilai;
 				 var xhr;
@@ -150,7 +149,7 @@
 				 if (window.XMLHttpRequest) xhr = new XMLHttpRequest(); // all browsers 
 				 else xhr = new ActiveXObject("Microsoft.XMLHTTP"); // for IE
 				 
-				 var url = 'modul/mod_inventory/get_potopor.php?q=' + vals;
+				 var url = 'modul/mod_inventory/get_portoret.php?q=' + vals;
 				 xhr.open('GET', url, false);
 				 xhr.onreadystatechange = function () {
 				 if (xhr.readyState===4 && xhr.status===200) {

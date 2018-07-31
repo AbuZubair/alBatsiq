@@ -44,7 +44,7 @@
 			}
 		}
 		
-		header('location:../../albatsiq.php?module=inventory&act=purchaseOrderList');	 
+		header('location:../../albatsiq.php?module=inventory&act=purchaseOrderList&page=1');	 
 		
 	} else if ($_GET['act'] == 'editPO'){
 		$numrow = $_GET['id'];
