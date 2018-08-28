@@ -14,10 +14,9 @@ if (!ctype_alnum($username) OR !ctype_alnum($pass)){
 }
 else{
 $login=mysql_query("SELECT * FROM user WHERE USERNAME='$username' AND PASSWORD='$pass' AND BLOKIR='N'");
-//$login_nik=mysql_query("SELECT * FROM tbl_pegawai WHERE NIK='$nik'");
 $ketemu=mysql_num_rows($login);
 $r=mysql_fetch_array($login);
-//$row=mysql_fetch_array($login_nik);
+
 
 // Apabila username dan password ditemukan
 if ($ketemu > 0){
@@ -28,6 +27,7 @@ if ($ketemu > 0){
   $_SESSION[namalengkap]  = $r[NAMA_LENGKAP];
   $_SESSION[passuser]     = $r[PASSWORD];
   $_SESSION[leveluser]    = $r[LEVEL];
+  $_SESSION[unit]         = $r[UNIT_ID];
   
   // session timeout
   $_SESSION[login] = 1;

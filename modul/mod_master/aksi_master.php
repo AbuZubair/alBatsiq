@@ -54,6 +54,7 @@
 	}
 	else if ($_GET['act'] == 'addItemTariff'){
 		mysql_query("insert into item_tariff (ITEM_ID,HARGA_JUAL,DATE) values ('$item','$hargajual','$tgl')");
+		mysql_query("update item set HARGA_JUAL = '$hargajual' where ITEM_ID = '$item'");
 		header('location:../../albatsiq.php?module=master&act=masteritemTariffList');
 	}
 		

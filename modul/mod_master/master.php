@@ -44,9 +44,9 @@ switch($_GET[act]){
 
 <script>
 function myFunction() {
-    document.getElementById("itemgroup").value = "<?php echo $itemEdit[2] ?>";
-	document.getElementById("satuanbl").value = "<?php echo $itemEdit[3] ?>";
-	document.getElementById("satuanjl").value = "<?php echo $itemEdit[4] ?>";
+    document.getElementById("itemgroup").value = "<?php echo $itemEdit["ITEM_GROUP"] ?>";
+	document.getElementById("satuanbl").value = "<?php echo $itemEdit["SATUAN_BELI"] ?>";
+	document.getElementById("satuanjl").value = "<?php echo $itemEdit["SATUAN_JUAL"] ?>";
 }
 
 function searchfunc(){

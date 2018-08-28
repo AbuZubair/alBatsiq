@@ -10,6 +10,7 @@
 	$tambah = $numrow + 1; 
 	$num = sprintf("%04d", $tambah);
 	$cekitem = mysql_query("select * from item");
+	$cekunit = mysql_query("select * from unit");
 	$getItemID = $_GET["id"];
 	$itemID = explode(" ",$getItemID);	
 	$itemIDs = $itemID[0];	
@@ -36,6 +37,23 @@
 							<td><input type='text' value='$tglskg' name='tgl' readonly='readonly'></td>
 						</tr>
 						<tr>
+							<td class='titlechild'>To Unit</td>
+							<td>
+								<select name='locunit' width='20' id='insertlocunit' onchange='getrec()' required>";
+								while ($row = mysql_fetch_array($cekunit))
+									{
+										echo" 
+										<option style='display:none;' selected></option>
+										<option value='".$row['LOC_ID']."'>
+											".$row['UNIT_NAME']."
+										</option>";
+									}   
+								echo"					
+								</select>
+								<p id='alertlocunit' style='display:inline;color:red;font-size:12px;'></p>
+							</td>
+						</tr>
+						<tr>
 							<td class='titlechild'>Purchase Order No.</td>
 							<td><input id='insertReferenceNo' type='text' readonly='readonly'><button onclick='outstanding()' style='background-color: #008CBA;'>Outstanding</button>
 							<button onclick='ResetOutstanding()' style='background-color: #008CBA;'>Reset</button></td>
@@ -53,15 +71,15 @@
 				</div>
 				
 				<div style='clear:both;'>	
-					<table width='100%'>
+					<table  id='insertTable' style='display:none;' width='100%'>
 						<tr>
 							<td style='color:white;background-color:#001f3f;' colspan='6'>
 								Item 
 							</td>
 						</tr>
 						<tr>
-							<td width='30%'>Item ID*</td>
-							<td width='10%'>Quantity*</td>
+							<td width='20%'>Item ID*</td>
+							<td width='20%'>Quantity*</td>
 							<td width='20%'>Satuan*</td>
 							<td width='10%'>Konversi</td>
 							<td width='20%'>Harga*</td>
@@ -69,11 +87,11 @@
 						</tr>					
 						<tr>
 							<td>
-								<select name='item' width='20' id='insertItemID' onchange='getval(this);'>";
+								<select name='item' class='searchSelect' id='insertItemID' onchange='getval(this)'>
+								<option disabled value=' ' selected>--Select Item--</option>";
 									while ($row = mysql_fetch_array($cekitem))
 										{
 											echo" 
-											<option style='display:none;' selected></option>
 											<option value='".$row['ITEM_ID']." - ".$row['ITEM_NAME']."'>
 												".$row['ITEM_ID']." - ".$row['ITEM_NAME']." 
 											</option>";
@@ -83,14 +101,12 @@
 							</td>
 							<td>
 								<input type='number' size='25' placeholder='0' name='insertqty' id='insertqty' >
+								<p id='balanceskg' style='display:inline;font-size:15px;'></p>
 							</td>
 							<td>
 								<select name='satuan' id='insertSatuan'>
-									<option style='display:none;' disabled selected value> </option>
-									  <option value='Meter'>Meter</option>
-									  <option value='Gulung'>Gulung</option>
-									  <option value='Buah'>Buah</option>
-									  <option value='Pcs'>Pcs</option>
+									<option id='satuanbl'></option>
+									<option id='satuanjl'></option>
 								</select>
 							</td>
 							<td>
@@ -118,6 +134,7 @@
 							<input type='hidden' name='referenceNo' id='referenceNo'>
 							<input type='hidden' name='jmlcell' id='jmlcell'>
 							<input type='hidden' name='note' id='note'>
+							<input type='hidden' name='locunit' id='locunit'>
 						</table>
 					</form>
 					<p id='alert' style='color:red;font-size:12px;text-align:left;'></p>
@@ -131,10 +148,16 @@
 
 <script>
 	function outstanding(){
-		var date = "<?php echo $date ?>";
-		var res = date.split("-");
-		var newdate = res[1]+"/"+res[1]+"/"+res[0];
-		window.open("modul/mod_inventory/selectPO.php?id=default&page=1", "popuppage", "width=500,height=600,toolbar=no,scrollbars=yes,location=no,statusbar=no,menubar=no,resizable=yes,fullscreen=no");
+		var unit = document.getElementById("insertlocunit").value;
+		if(unit == ''){
+			document.getElementById("alertlocunit").innerHTML = "*Lengkapi data berikut";
+			return;
+		} else{
+			var date = "<?php echo $date ?>";
+			var res = date.split("-");
+			var newdate = res[1]+"/"+res[1]+"/"+res[0];
+			window.open("modul/mod_inventory/selectPO.php?id=default&page=1", "popuppage", "width=500,height=600,toolbar=no,scrollbars=yes,location=no,statusbar=no,menubar=no,resizable=yes,fullscreen=no");
+		}
 	}
 	
 	function updateValue(nilai){
@@ -169,10 +192,10 @@
 						var cell6 = row.insertCell(5);
 						
 						var width = document.createAttribute("width"); 
-						width.value = "30%";
+						width.value = "20%";
 						cell1.setAttributeNode(width);
 						var width2 = document.createAttribute("width"); 
-						width2.value = "10%";
+						width2.value = "20%";
 						cell2.setAttributeNode(width2);
 						var width3 = document.createAttribute("width"); 
 						width3.value = "20%";
@@ -296,4 +319,31 @@
 		}
 			 
 	}
+
+function getrec(){
+		var table = document.getElementById("insertTable");
+		table.style.display = "block";
+		table.style.border = "none";
+		table.style.width = "100%";
+		table.style.padding = "0";
+	}
+
+function setValue(){
+	var table = document.getElementById("record");
+	var rowCount = table.rows.length;
+	var location = document.getElementById("insertlocunit").value ;
+	var ok = false;
+	if(rowCount <= 0){
+		alert("Mohon Lengkapi data inputan!!");
+		return ok;
+	} else {
+		var note = document.getElementById("insertNote").value ;
+		document.getElementById("note").value = note;
+		var ref = document.getElementById("insertReferenceNo").value ;
+		document.getElementById("referenceNo").value = ref;
+		var location = document.getElementById("insertlocunit").value ;
+		document.getElementById("locunit").value = location;
+	} 
+	
+}
 </script>

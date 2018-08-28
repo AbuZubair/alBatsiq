@@ -68,7 +68,7 @@ table tr:nth-child(even){background-color: #f2f2f2;}
 
 table tr:hover {background-color: #ddd;}
 
-button{
+#btnok{
 	background-color: #008CBA;
 	position:absolute;
 	left:50%;
@@ -109,7 +109,7 @@ button{
 	
 	";
 	if($_GET['id'] == 'default'){
-	$cekpofirst = mysql_query("SELECT DISTINCT * FROM item_transaction WHERE TRANSACTION_CODE = '001' AND TRANSACTION_NO NOT IN ( SELECT DISTINCT REFERENCE_NO FROM item_transaction where IS_COMPLETE = 1 )LIMIT $start_from, $limit");
+	$cekpofirst = mysql_query("SELECT DISTINCT * FROM item_transaction WHERE TRANSACTION_CODE = '001' AND TRANSACTION_NO NOT IN ( SELECT DISTINCT REFERENCE_NO FROM item_transaction where IS_COMPLETE = 1 ) ORDER BY TRANSACTION_NO DESC LIMIT $start_from, $limit");
 	$numrowfirst = mysql_num_rows($cekpofirst);
 	if($numrowfirst != 0){
 		while($po = mysql_fetch_array($cekpofirst)){
@@ -126,7 +126,7 @@ button{
 					}
 					echo"
 					</table>
-					<button onclick='sendValue($numrowfirst)' style='background-color: #008CBA;'>OK</button>
+					<button id='btnok' onclick='sendValue($numrowfirst)' style='background-color: #008CBA;'>OK</button>
 			";
 		}
 			echo"	<ul class='pagination'>";
@@ -148,7 +148,7 @@ button{
 
 		
 			// Buat query untuk menghitung semua jumlah data
-			$resut =  mysql_query("SELECT DISTINCT * FROM item_transaction WHERE TRANSACTION_CODE = '001' AND TRANSACTION_NO NOT IN ( SELECT DISTINCT REFERENCE_NO FROM item_transaction where IS_COMPLETE = 1 )");
+			$resut =  mysql_query("SELECT DISTINCT * FROM item_transaction WHERE TRANSACTION_CODE = '001' AND TRANSACTION_NO NOT IN ( SELECT DISTINCT REFERENCE_NO FROM item_transaction where IS_COMPLETE = 1 ) ORDER BY TRANSACTION_NO DESC");
 			$row = mysql_num_rows($resut);    
 			$jumlah_page = ceil($row / $limit);
 			$jumlah_number = 3; // Tentukan jumlah link number sebelum dan sesudah page yang aktif
@@ -188,7 +188,7 @@ button{
 		
 		$tgl2 = explode("/",$sampaisearch);
 		$tglskg2 = date("$tgl2[2]-$tgl2[0]-$tgl2[1]");
-		$cekpo = mysql_query("select * from item_transaction where TRANSACTION_DATE between '$tglskg'and '$tglskg2' and TRANSACTION_CODE='001' AND TRANSACTION_NO NOT IN ( SELECT DISTINCT REFERENCE_NO FROM item_transaction where IS_COMPLETE = 1 )");
+		$cekpo = mysql_query("select * from item_transaction where TRANSACTION_DATE between '$tglskg'and '$tglskg2' and TRANSACTION_CODE='001' AND TRANSACTION_NO NOT IN ( SELECT DISTINCT REFERENCE_NO FROM item_transaction where IS_COMPLETE = 1 ) ORDER BY TRANSACTION_NO DESC");
 		$numrow = mysql_num_rows($cekpo);
 				
 		while($po = mysql_fetch_array($cekpo)){
@@ -206,7 +206,7 @@ button{
 			}
 			echo"
 			</table>
-			<button onclick='sendValue($numrow)' style='background-color: #008CBA;'>OK</button>
+			<button id='btnok' onclick='sendValue($numrow)' style='background-color: #008CBA;'>OK</button>
 		";
 	}
 	

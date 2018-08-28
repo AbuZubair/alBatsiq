@@ -22,11 +22,11 @@
 							<table width='100%'>
 								<tr>
 									<td class='titlechild'>ID Item</td>
-									<td><input type='text' name='itemid' size='5' value='$itemEdit[0]'></td>
+									<td><input type='text' name='itemid' size='5' value='$itemEdit[ITEM_ID]'></td>
 								</tr>
 								<tr>
 									<td class='titlechild'>Nama Item</td>
-									<td><input type='text' name='itemname' size='50' value='$itemEdit[1]'></td>
+									<td><input type='text' name='itemname' size='50' value='$itemEdit[ITEM_NAME]'></td>
 								</tr>
 								<tr>
 									<td class='titlechild'>Item Group</td>
@@ -57,7 +57,7 @@
 								</tr>
 								<tr>
 									<td class='titlechild'>Konversi</td>
-									<td><input type='number' name='konversi' value='$itemEdit[7]'></td>
+									<td><input type='number' name='konversi' value='$itemEdit[KONVERSI]'></td>
 								</tr>
 								<tr>
 									<td class='titlechild'></td>";
@@ -78,20 +78,15 @@
 						<table width='100%'>
 							<tr>
 								<td class='titlechild'>Harga Beli</td>
-								<td><input type='text' name='hrgbeli' value='0.00' readonly='readonly'></td>
+								<td><input type='text' name='hrgbeli' value='$itemEdit[HARGA_BELI]' readonly='readonly'></td>
 							</tr>
 							<tr>
 								<td class='titlechild'>HPP</td>
 								<td><input type='text' name='hpp' value='0.00' readonly='readonly' ></td>
 							</tr>
 							<tr>
-								<td class='titlechild'>Harga Jual</td>";
-								
-								$cekhargajualskg = mysql_query("select * from item_tariff where ITEM_ID = '$id' order by DATE DESC, TARIFF_ID DESC LIMIT 1");
-								$hrgjualskg = mysql_fetch_array($cekhargajualskg);
-								
-								echo"
-								<td><input type='text' name='hrgjual' value='$hrgjualskg[HARGA_JUAL]' readonly='readonly'></td>
+								<td class='titlechild'>Harga Jual</td>
+								<td><input type='text' name='hrgjual' value='$itemEdit[HARGA_JUAL]' readonly='readonly'></td>
 						</table>
 					</div>
 				</div>

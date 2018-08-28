@@ -5,18 +5,32 @@ date_default_timezone_set('Asia/Jakarta');
 // Bagian Home
 if ($_GET['module']=='home'){
   if ($_SESSION['leveluser']=='user'){
-		echo "<h1>VISI</h1> 
-			Menjadi Rumah Sakit yang memenuhi kebutuhan keluarga dalam masyarakat secara holistik, dengan layanan tepat dan profesional
-			<h1>MISI</h1> 
-			Meningkatkan mutu pelayanan kesehatan yang memenuhi kaidah  keselamatan pasien
-			<h1>&nbsp</h1>";
+    echo "
+    <div class='welcomepage'>
+      <h1> كُلُّ نَفْسٍ ذَائِقَةُ الْمَوْتِ ۖ ثُمَّ إِلَيْنَا تُرْجَعُونَ </h1>
+      <h2>“Setiap yang bernyawa akan merasakan mati. <br>
+      Kemudian hanya kepada Kami kamu dikembalikan” [al-‘Ankabût/29:57]</h2>
+    </div>
+      
+    ";
   }
   elseif ($_SESSION['leveluser']=='admin'){
   echo "
-          <p>Hai selamat datang di halaman Administrator .<br> 
-          Silahkan klik menu pilihan yang berada di sebelah kiri untuk mengelola website. </p>";
+  <div class='welcomepage'>
+    <h1>…يَا ابْنَ آدَمَ إِنَّكَ لَوْ أَتَيْتَنِي بِقُرَابِ اْلأَرْضِ خَطَايَا ثُمَّ لَقِيْتَنِي لاَ تُشْرِكُ بِي شَيْئاً لأَتَيْتُكَ بِقُرَابِهَا مَغْفِرَةً.</h1>
+    <h2>‘…Wahai bani Adam, seandainya engkau datang kepada-Ku dengan dosa sepenuh bumi,<br>
+     sedangkan engkau ketika mati tidak menyekutukan Aku sedikit pun juga,<br>
+      pasti Aku akan berikan kepadamu ampunan sepenuh bumi pula.’<br>
+      HR. At-Tirmidzi (no. 3540), ia berkata, “Hadits hasan gharib.”   
+    </h2>
+  </div>";
  	}
 } 
+
+// Bagian Sales
+elseif ($_GET['module']=='sales'){
+  include "modul/mod_sales/sales.php";
+}
 
 // Bagian User
 elseif ($_GET['module']=='user'){
@@ -40,6 +54,13 @@ elseif ($_GET['module']=='control'){
   }
 }
 
+// Bagian Report
+elseif ($_GET['module']=='report'){
+  if ($_SESSION['leveluser']=='admin'){
+    include "modul/mod_report/report.php";
+  }
+}
+
 // Bagian Master
 elseif ($_GET['module']=='master'){
   if ($_SESSION['leveluser']=='admin'){
@@ -50,34 +71,6 @@ elseif ($_GET['module']=='master'){
 // Bagian Inventory
 elseif ($_GET['module']=='inventory'){
     include "modul/mod_inventory/inventory.php";
-}
-
-// Bagian Cuti
-elseif ($_GET['module']=='cuti'){
-  if ($_SESSION['leveluser']=='user'){
-    include "modul/mod_cuti/cuti.php";
-  }
-}
-
-// Bagian Shift
-elseif ($_GET['module']=='shift'){
-  if ($_SESSION['leveluser']=='user'){
-    include "modul/mod_shift/shift.php";
-  }
-}
-
-// Bagian Absen
-elseif ($_GET['module']=='absen'){
-  if ($_SESSION['leveluser']=='user'){
-    include "modul/mod_absen/absen.php";
-  }
-}
-
-// Bagian Lembur
-elseif ($_GET['module']=='lembur'){
-  if ($_SESSION['leveluser']=='user'){
-    include "modul/mod_lembur/lembur.php";
-  }
 }
 
 // Apabila modul tidak ditemukan

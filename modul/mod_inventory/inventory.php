@@ -31,6 +31,38 @@ switch($_GET[act]){
 	case "purchaseOrderReturnNew";
 		include "purchaseOrderReturnNew.php";
 	break;
+
+	case "purchaseOrderReturnEdit";
+		include "purchaseOrderReturnEdit.php";
+	break;
+
+	case "stockInformation";
+		include "stockInformation.php";
+	break;
+
+	case "productionList";
+		include "productionList.php";
+	break;
+
+	case "productionNew";
+		include "productionNew.php";
+	break;
+
+	case "distribusiList";
+		include "distribusiList.php";
+	break;
+
+	case "distribusiNew";
+		include "distribusiNew.php";
+	break;
+
+	case"stockAdjustNew";
+		include "stockAdjustNew.php";
+	break;
+
+	case"stockAdjustList";
+		include "stockAdjustList.php";
+	break;
 }
 ?>
 <script>
@@ -58,11 +90,14 @@ function addRecord() {
 	var cek2 =  document.getElementById("insertqty").value;
 	//var cek3 =  document.getElementById("auto4").value;
 	var cek4 =  document.getElementById("inserthrg").value;
+	var bal =  document.getElementById("balanceskg").innerHTML;
 	var ok = false;
 	if (cek1 == '' || cek2 == '' || cek4 == ''){
 		document.getElementById("alert").innerHTML = "*Please Fill All Required Field";
 		return ok;
-	} else {
+	} else if(cek2 == 0){
+		alert("Nilai tidak boleh 0!!");
+	}else {
 		
 	var table = document.getElementById("record");
 	var rowCount = table.rows.length;
@@ -88,10 +123,10 @@ function addRecord() {
 	var cell6 = row.insertCell(5);
 	
 	var width = document.createAttribute("width"); 
-	width.value = "30%";
+	width.value = "20%";
 	cell1.setAttributeNode(width);
 	var width2 = document.createAttribute("width"); 
-	width2.value = "10%";
+	width2.value = "20%";
 	cell2.setAttributeNode(width2);
 	var width3 = document.createAttribute("width"); 
 	width3.value = "20%";
@@ -126,6 +161,8 @@ function addRecord() {
 	cell1.appendChild(input).setAttributeNode(size);
 	cell1.appendChild(input).setAttributeNode(read);
 	
+	var p = document.createElement("p");
+	cell2.appendChild(p);
 	var input = document.createElement("input");
 	cell2.appendChild(input);
 	var type = document.createAttribute("type"); 
@@ -136,6 +173,12 @@ function addRecord() {
 	val2.value = document.getElementById("insertqty").value;
 	var read = document.createAttribute("readonly");
 	read.value = "readonly";
+	var style = document.createAttribute("style");
+	style.value = "display:inline;font-family:Arial;font-size:15px;";
+	var text = document.createTextNode(bal+" " );
+	//cell2.appendChild(p).setAttributeNode(id);
+	cell2.appendChild(p).setAttributeNode(style);
+	cell2.appendChild(p).appendChild(text);
 	cell2.appendChild(input).setAttributeNode(type);
 	cell2.appendChild(input).setAttributeNode(name);
 	cell2.appendChild(input).setAttributeNode(val2);
@@ -207,11 +250,14 @@ function addRecord() {
 	}
 	
 	document.getElementById("insertItemID").value = " ";
+	document.getElementById("select2-insertItemID-container").innerHTML = " ";
+	document.getElementById("select2-insertItemID-container").title = " ";
 	document.getElementById("insertqty").value = " ";
 	document.getElementById("insertSatuan").value = " ";
 	document.getElementById("inserthrg").value = " ";
 	document.getElementById("insertknv").value = " ";
 	document.getElementById("alert").innerHTML = " ";
+	document.getElementById("balanceskg").innerHTML = " ";
 	
 }
 
@@ -238,31 +284,18 @@ function removeRow(){
 	
 }
 
-function setValue(){
-	var table = document.getElementById("record");
-	var rowCount = table.rows.length;
-	var ok = false;
-	if(rowCount <= 0){
-		alert("No Record");
-		return ok;
-	} else {
-		var note = document.getElementById("insertNote").value ;
-		document.getElementById("note").value = note;
-		var ref = document.getElementById("insertReferenceNo").value ;
-		document.getElementById("referenceNo").value = ref;
-	} 
-}
-
 
 function getval(sel){
+	
 	//var js_var = "<br />Hello world from JavaScript"; 
 	var vals = sel.value;
+	var unit = document.getElementById("insertlocunit").value;
 	 var xhr;
-	 
+	
 	 if (window.XMLHttpRequest) xhr = new XMLHttpRequest(); // all browsers 
 	 else xhr = new ActiveXObject("Microsoft.XMLHTTP"); // for IE
 	 
-	 var url = 'modul/mod_inventory/get_value.php?q=' + vals;
+	 var url = 'modul/mod_inventory/get_value.php?q=' + vals +'&unit=' + unit;
 	 xhr.open('GET', url, false);
 	 xhr.onreadystatechange = function () {
 	 if (xhr.readyState===4 && xhr.status===200) {
@@ -270,18 +303,21 @@ function getval(sel){
 	 var a = x[0];
 	 var b = x[2];
 	 var c = x[1];
+	 var d = x[3];
 	 document.getElementById("satuanbl").value = a;
 	 document.getElementById("satuanbl").text = a;
 	 document.getElementById("satuanjl").value = c;
 	 document.getElementById("satuanjl").text = c;
-	 document.getElementById("insertSatuan").value = a;
 	 document.getElementById("insertknv").value = b;
+	 document.getElementById("insertSatuan").value = a;
+	 document.getElementById("balanceskg").innerHTML = "(Balance: "+d+" )";
 	 }
 	 }
 	 xhr.send();
 	// ajax stop
-	 return false;
+	 return false; 
 }
+
 	
 	function ResetOutstanding(){
 		location.reload();

@@ -34,7 +34,7 @@ function confirmUname() {
 
 </script>
 <?php
-
+$cekunit = mysql_query("select * from unit");
 echo "
 <div id='titlepage'>
 	<div class = 'title-container'>
@@ -47,7 +47,7 @@ echo "
 
 			
 	<form method=POST action='albatsiq.php?module=control&act=tambahuser&id=add' onsubmit='return confirmPass()' id='form1'>
-		<table width='40%'>
+		<table width='50%'>
 			<tr>
 				<td class='titlechild'>Username</td>
 				<td><input type='text' name='username' id='uname' required></td>
@@ -57,9 +57,30 @@ echo "
 				<td><input type='text' name='namalengkap' size='30' id='namalkp' required></td>
 			</tr>
 			<tr>
-				<td class='titlechild'>Level</td>
-				<td><input type='radio' name='lvl' id='lvl1' value='user'> User
-					<input type='radio' name='lvl' id='lvl2' value='admin'> Admin<br>
+				<td class='titlechild'>User Role</td>
+				<td><select name='userrule' id='userrule'>
+						<option style='display:none;' disabled selected value>  </option>
+						<option value='user'>User</option>
+						<option value='kepala toko'>Kepala Toko</option>
+						<option value='kepala gudang'>Kepala Gudang</option>
+						<option value='admin'>Administrator</option>
+					</select></td>
+			</tr>
+			<tr>
+				<td class='titlechild'>Unit</td>
+				<td>
+					<select name='locunit' width='20' id='locunit' required>";
+					while ($row = mysql_fetch_array($cekunit))
+						{
+							echo" 
+							<option style='display:none;' selected></option>
+							<option value='".$row['UNIT_ID']."'>
+								".$row['UNIT_NAME']."
+							</option>";
+						}   
+					echo"					
+					</select>
+				</td>
 			</tr>
 			<tr>
 				<td class='titlechild'>Password</td>
@@ -83,11 +104,12 @@ echo "
 			$uname = strtolower ($_POST['username']);
 			$password = strtolower($_POST['password']);
 			$pass=md5($password);
+			$unit = $_POST['locunit'];
 			$cekdulu = mysql_query("select * from user where USERNAME = '$uname'");
 			$rowcek = mysql_num_rows($cekdulu);
 			
 			if($rowcek == 0){
-			mysql_query("insert into user(USERNAME,PASSWORD,NAMA_LENGKAP,LEVEL) values ('$uname','$pass', '$_POST[namalengkap]','$_POST[lvl]') ");
+			mysql_query("insert into user(USERNAME,PASSWORD,NAMA_LENGKAP,LEVEL,UNIT_ID) values ('$uname','$pass', '$_POST[namalengkap]','$_POST[userrule]','$unit') ");
 			echo "
 			<script type='text/javascript'>
 				alert('User berhasil ditambahkan');

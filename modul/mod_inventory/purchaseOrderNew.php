@@ -21,7 +21,7 @@
 							<h1>Purchase Order</h1>
 						</div>
 					</div>
-						<h3><a href=albatsiq.php?module=inventory&act=purchaseOrderList&page=1 class='link'>Back</a></h3>
+						<h3><a href=albatsiq.php?module=inventory&act=purchaseOrderList class='link'>Back</a></h3>
 			</div>
 			
 			<div id='wrapper-master'>
@@ -64,11 +64,11 @@
 						</tr>
 						<tr>
 							<td>
-								<select name='item' id='insertItemID' onchange='getval(this);getvalknv(this)'>";
+								<select name='item' class='searchSelect' id='insertItemID' onchange='getvals(this)'>
+									<option disabled value=' ' selected>--Select Item--</option>";
 									while ($row = mysql_fetch_array($cekitem))
 										{
-											echo" 
-											<option style='display:none;' selected></option>
+											echo" 					
 											<option value='".$row['ITEM_ID']." - ".$row['ITEM_NAME']."'>
 												".$row['ITEM_ID']." - ".$row['ITEM_NAME']." 
 											</option>";
@@ -92,7 +92,7 @@
 								Rp. <input type='number' step='0.01' placeholder='0.00' name='inserthrg' id='inserthrg'>
 							</td>
 							<td>
-								<a class='button3' onclick='return addRecord()'><i class='fa fa-plus-circle'></i> Insert</a>
+								<a class='button3' onclick='return addRecords()'><i class='fa fa-plus-circle'></i> Insert</a>
 							</td>
 							
 						</tr>
@@ -103,7 +103,7 @@
 						</tr>
 					
 					</table>
-					<form method=POST action='modul/mod_inventory/aksi_inventory.php?act=addPO' id='form1' onsubmit='return setValue()'>
+					<form method=POST action='modul/mod_inventory/aksi_inventory.php?act=addPO' id='form1' onsubmit='return setValues()'>
 						<table width='100%' id='record'>
 							<input type='hidden' name='ponumber' id='ponumber' value='PO/$tahun/$bulan/$num'>
 							<input type='hidden' value='$tglskg' name='tgl' readonly='readonly'>
@@ -118,3 +118,230 @@
 					
 			";
 ?>
+
+<script>
+
+var a = 0;
+var x = 0;
+
+function addRecords() {
+	var cek1 =  document.getElementById("insertItemID").value;
+	var cek2 =  document.getElementById("insertqty").value;
+	//var cek3 =  document.getElementById("auto4").value;
+	var cek4 =  document.getElementById("inserthrg").value;
+	var ok = false;
+	if (cek1 == '' || cek2 == '' || cek4 == ''){
+		document.getElementById("alert").innerHTML = "*Please Fill All Required Field";
+		return ok;
+	} else if (cek2 == 0 || cek4 == 0){
+		alert("Tidak boleh 0");
+		return ok;
+	} else {
+		
+	var table = document.getElementById("record");
+	var rowCount = table.rows.length;
+	
+	for(var i=0; i<rowCount; i++) {
+		var row = table.rows[i];
+		var idcek = row.cells[0].childNodes[0];
+		if(null != idcek && cek1 == idcek.value) {
+			alert("Item Sudah ada dalam list");
+			return;
+		}
+	}
+		
+    var table = document.getElementById("record");
+    var row = table.insertRow(a);
+    var cell1 = row.insertCell(0);
+    var cell2 = row.insertCell(1);
+	var cell3 = row.insertCell(2);
+	var cell4 = row.insertCell(3);
+	var cell5 = row.insertCell(4);
+	var textnode = document.createTextNode("Rp.");
+	cell5.appendChild(textnode);
+	var cell6 = row.insertCell(5);
+	
+	var width = document.createAttribute("width"); 
+	width.value = "20%";
+	cell1.setAttributeNode(width);
+	var width2 = document.createAttribute("width"); 
+	width2.value = "20%";
+	cell2.setAttributeNode(width2);
+	var width3 = document.createAttribute("width"); 
+	width3.value = "20%";
+	cell3.setAttributeNode(width3);
+	var width4 = document.createAttribute("width"); 
+	width4.value = "10%";
+	cell4.setAttributeNode(width4);
+	var width5 = document.createAttribute("width"); 
+	width5.value = "20%";
+	cell5.setAttributeNode(width5);
+	var width6 = document.createAttribute("width"); 
+	width6.value = "10%";
+	cell6.setAttributeNode(width6);
+	
+	
+	
+	var input = document.createElement("input");
+	cell1.appendChild(input);
+	var name = document.createAttribute("name");
+	name.value = "itemID"+x;
+	var val = document.createAttribute("value");
+	val.value = document.getElementById("insertItemID").value;
+	var id = document.createAttribute("id");
+	id.value = "InputItemID";
+	var size = document.createAttribute("size");
+	size.value = "30";
+	var read = document.createAttribute("readonly");
+	read.value = "readonly";
+	cell1.appendChild(input).setAttributeNode(name);
+	cell1.appendChild(input).setAttributeNode(val);
+	cell1.appendChild(input).setAttributeNode(id);
+	cell1.appendChild(input).setAttributeNode(size);
+	cell1.appendChild(input).setAttributeNode(read);
+	
+	
+	var input = document.createElement("input");
+	cell2.appendChild(input);
+	var type = document.createAttribute("type"); 
+	type.value = "number";
+	var name = document.createAttribute("name");
+	name.value = "qty"+x;
+	var val2 = document.createAttribute("value");
+	val2.value = document.getElementById("insertqty").value;
+	var read = document.createAttribute("readonly");
+	read.value = "readonly";
+	
+	cell2.appendChild(input).setAttributeNode(type);
+	cell2.appendChild(input).setAttributeNode(name);
+	cell2.appendChild(input).setAttributeNode(val2);
+	cell2.appendChild(input).setAttributeNode(read);
+	
+	var input = document.createElement("input");
+	cell3.appendChild(input);
+	var type = document.createAttribute("type"); 
+	type.value = "text";
+	var name = document.createAttribute("name");
+	name.value = "satuan"+x;
+	var val3 = document.createAttribute("value");
+	val3.value = document.getElementById("insertSatuan").value;
+	var read = document.createAttribute("readonly");
+	read.value = "readonly";
+	cell3.appendChild(input).setAttributeNode(type);
+	cell3.appendChild(input).setAttributeNode(name);
+	cell3.appendChild(input).setAttributeNode(val3);
+	cell3.appendChild(input).setAttributeNode(read);
+	
+	var input = document.createElement("input");
+	cell4.appendChild(input);
+	var type = document.createAttribute("type"); 
+	type.value = "number";
+	var name = document.createAttribute("name");
+	name.value = "knv"+x;
+	var val4 = document.createAttribute("value");
+	val4.value = document.getElementById("insertknv").value;
+	var read = document.createAttribute("readonly");
+	read.value = "readonly";
+	cell4.appendChild(input).setAttributeNode(type);
+	cell4.appendChild(input).setAttributeNode(name);
+	cell4.appendChild(input).setAttributeNode(val4);
+	cell4.appendChild(input).setAttributeNode(read);
+	
+	var input = document.createElement("input");
+	cell5.appendChild(input);
+	var type = document.createAttribute("type"); 
+	type.value = "number";
+	var name = document.createAttribute("name");
+	name.value = "harga"+x;
+	var val5 = document.createAttribute("value");
+	val5.value = document.getElementById("inserthrg").value;
+	var read = document.createAttribute("readonly");
+	read.value = "readonly";
+	cell5.appendChild(input).setAttributeNode(type);
+	cell5.appendChild(input).setAttributeNode(name);
+	cell5.appendChild(input).setAttributeNode(val5);
+	cell5.appendChild(input).setAttributeNode(read);
+	
+	var btn = document.createElement("input");
+	cell6.appendChild(btn);
+	var type = document.createAttribute("type"); 
+	type.value = "checkbox";
+	var name = document.createAttribute("name");
+	name.value = "chk"+x;
+	var id = document.createAttribute("id");
+	id.value = "chk";
+	var val6 = document.createAttribute("value");
+	val6.value = "Y";
+	cell6.appendChild(btn).setAttributeNode(type);
+	cell6.appendChild(btn).setAttributeNode(name);
+	cell6.appendChild(btn).setAttributeNode(id);
+	cell6.appendChild(btn).setAttributeNode(val6);
+	
+	a++;
+	document.getElementById("jmlcell").value = x;
+	x++;
+	}
+	
+	document.getElementById("insertItemID").value = " ";
+	document.getElementById("select2-insertItemID-container").innerHTML = " ";
+	document.getElementById("select2-insertItemID-container").title = " ";
+	document.getElementById("insertqty").value = " ";
+	document.getElementById("insertSatuan").value = " ";
+	document.getElementById("inserthrg").value = " ";
+	document.getElementById("insertknv").value = " ";
+	document.getElementById("alert").innerHTML = " ";
+	
+	
+}
+
+function setValues(){
+	var table = document.getElementById("record");
+	var rowCount = table.rows.length;
+	
+	var ok = false;
+	if(rowCount <= 0){
+		alert("Mohon Lengkapi data inputan!!");
+		return ok;
+	} else {
+		var note = document.getElementById("insertNote").value ;
+		document.getElementById("note").value = note;
+		var ref = document.getElementById("insertReferenceNo").value ;
+		document.getElementById("referenceNo").value = ref;
+	} 
+
+}
+
+
+function getvals(sel){
+	
+	//var js_var = "<br />Hello world from JavaScript"; 
+	var vals = sel.value;
+	
+	 var xhr;
+	 
+	 if (window.XMLHttpRequest) xhr = new XMLHttpRequest(); // all browsers 
+	 else xhr = new ActiveXObject("Microsoft.XMLHTTP"); // for IE
+	 
+	 var url = 'modul/mod_inventory/get_values.php?q=' + vals;
+	 xhr.open('GET', url, false);
+	 xhr.onreadystatechange = function () {
+	 if (xhr.readyState===4 && xhr.status===200) {
+	 var x =  eval("(" + xhr.responseText + ")");
+	 var a = x[0];
+	 var b = x[2];
+	 var c = x[1];
+	 document.getElementById("satuanbl").value = a;
+	 document.getElementById("satuanbl").text = a;
+	 document.getElementById("satuanjl").value = c;
+	 document.getElementById("satuanjl").text = c;
+	 document.getElementById("insertSatuan").value = a;
+	 document.getElementById("insertknv").value = b;
+	 }
+	 }
+	 xhr.send();
+	// ajax stop
+	 return false; 
+}
+
+
+</script>

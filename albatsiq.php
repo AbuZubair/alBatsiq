@@ -40,15 +40,22 @@ else{
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <link rel="stylesheet" type="text/css" href="css/jquery.timepicker.css" />
+<link href="css/select2.min.css" rel="stylesheet" />
+<script src="js/select2.min.js"></script>
 <script src="js/jquery-ui.js"></script>
 <link rel="stylesheet" href="css/jquery-ui.css">
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <link rel="stylesheet" href="/resources/demos/style.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="css/css/all.css">
   <script>
   $( function() {
     $( "#datepicker" ).datepicker();
   } );
+
+	$(document).ready(function() {
+    $('.searchSelect').select2();
+});
+  
   </script>
 
 
@@ -79,23 +86,54 @@ else{
 			<div class='menu'>
 				<div class='dropdown'>
 					<a href=albatsiq.php?module=home>Home</a>
+				</div>";
+			if ($_SESSION['leveluser'] == 'admin' || $_SESSION['unit'] == 'B01'){
+				echo"
+				<div class='dropdown'>
+				  <button class='dropbtn'>Sales</button>
+					<div class='dropdown-content'>
+						<a href=albatsiq.php?module=sales&act=salesNew>Sales</a>
+						<a href=albatsiq.php?module=sales&act=salesRetList>Sales Return</a>
+					</div>
 				</div>
+						";	
+			}	
+				echo"
 				<div class='dropdown'>
 				  <button class='dropbtn'>Inventory</button>
-					<div class='dropdown-content'>
+					<div class='dropdown-content'>";
+					if ($_SESSION['leveluser'] == 'admin' ||  $_SESSION['leveluser'] == 'kepala gudang' ||  $_SESSION['leveluser'] == 'kepala toko') {
+						echo"
 						<div class='dropdown-submenu'>
 							<a class='dropbtn2' tabindex='-1' href='#'>Transaksi Item</a>
 								<div class='dropdown-content-sub'>
-									<a href=albatsiq.php?module=inventory&act=purchaseOrderList&page=1>Purchase Order</a>
-									<a href=albatsiq.php?module=inventory&act=purchaseOrderReceiveList&page=1>Purchase Order Receive</a>
-									<a href=albatsiq.php?module=inventory&act=purchaseOrderReturnList&page=1>Purchase Order Return</a>
+									<a href=albatsiq.php?module=inventory&act=purchaseOrderList>Purchase Order</a>
+									<a href=albatsiq.php?module=inventory&act=purchaseOrderReceiveList>Purchase Order Receive</a>
+									<a href=albatsiq.php?module=inventory&act=purchaseOrderReturnList>Purchase Order Return</a>
 								</div>
 						</div>
-						<a href=albatsiq.php?module=inventory&act=distribusi>Distribusi</a>
+						<a href=albatsiq.php?module=inventory&act=distribusiList>Distribusi</a>";
+					}
+					if ($_SESSION['leveluser'] == 'admin' ||  $_SESSION['leveluser'] == 'kepala gudang') {
+						echo"
+						<a href=albatsiq.php?module=inventory&act=productionList>Production</a>";
+				  	}
+						echo"
+				  		<div class='dropdown-submenu'>
+							<a class='dropbtn2' tabindex='-1' href='#'>Stock</a>
+								<div class='dropdown-content-sub2'>
+									<a href=albatsiq.php?module=inventory&act=stockInformation>Stock Information</a>";
+									if ($_SESSION['leveluser'] == 'admin' ||  $_SESSION['leveluser'] == 'kepala gudang') {
+									echo"
+										<a href=albatsiq.php?module=inventory&act=stockAdjustList>Stock Adjustment</a>";
+									}
+									echo"
+								</div>
+						</div>		
 					</div>
 				</div>";
 				
-				if ($_SESSION['leveluser'] == 'admin' ) {
+				if ($_SESSION['leveluser'] == 'admin' ||  $_SESSION['leveluser'] == 'kepala gudang') {
 							echo"
 							<div class='dropdown'>
 							  <button class='dropbtn'>Master</button>
@@ -104,7 +142,11 @@ else{
 									<a href=albatsiq.php?module=master&act=masteritemList>Item Product</a>
 									<a href=albatsiq.php?module=master&act=masteritemTariffList>Item Tariff</a>
 								</div>
-							</div>
+							</div>";
+				}
+
+				if ($_SESSION['leveluser'] == 'admin') {
+							echo"
 							<div class='dropdown'>
 							  <button class='dropbtn'>Control User</button>
 								<div class='dropdown-content'>
@@ -113,6 +155,12 @@ else{
 									<a href=albatsiq.php?module=control&act=resetpassword>Reset Password</a>
 								</div>
 							</div>
+
+							<div class='dropdown'>
+								<a href=albatsiq.php?module=report&act=report>Report</a>
+							</div>
+							
+	
 							";
 				}
 			echo"	

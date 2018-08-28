@@ -5,6 +5,7 @@ include "config/koneksi.php";
 $id = $_GET['id'];
 	$querynames = mysql_query("select * from user where USERNAME = '$id'");
 	$rownames = mysql_fetch_array($querynames);
+	$cekunit = mysql_query("select * from unit");
 	
 echo"
 
@@ -22,17 +23,37 @@ echo"
 				<table width='50%'>
 					<tr>
 						<td class='titlechild'> Username</td>
-						<td><b>$rownames[0]</b></td>
+						<td><b>$rownames[USERNAME]</b></td>
 					</tr>
 					<tr>
-						<td class='titlechild'> Nama Lengkap <input type='hidden' value='$rownames[0]' name='username'></td>
-						<td><input type='text' value='$rownames[2]' name='namalengkap' id='namalengkap' required></td>
+						<td class='titlechild'> Nama Lengkap <input type='hidden' value='$rownames[USERNAME]' name='username'></td>
+						<td><input type='text' value='$rownames[NAMA_LENGKAP]' name='namalengkap' id='namalengkap' required></td>
 					</tr>
 					<tr>
-						<td class='titlechild'> Level </td>
-						<td><input type='radio' name='lvl' id='lvl1' value='user'> User
-							<input type='radio' name='lvl' id='lvl2' value='admin'> Admin<br>
-					</tr>		
+						<td class='titlechild'> User Role </td>
+						<td><select name='userrule' id='userrule'>
+							<option id='user' value='user'>User</option>
+							<option id='kepala toko' value='kepala toko'>Kepala Toko</option>
+							<option id='kepala gudang' value='kepala gudang'>Kepala Gudang</option>
+							<option id='admin' value='admin'>Administrator</option>
+						</select></td>
+					</tr>	
+					<tr>
+						<td class='titlechild'>Unit</td>
+						<td>
+							<select name='locunit' width='20' id='locunit' required>";
+							while ($row = mysql_fetch_array($cekunit))
+								{
+									echo" 
+									<option style='display:none;' selected></option>
+									<option id='".$row['UNIT_ID']."' value='".$row['UNIT_ID']."'>
+										".$row['UNIT_NAME']."
+									</option>";
+								}   
+							echo"					
+							</select>
+						</td>
+					</tr>	
 				</table>
 		</form>
 					
@@ -42,11 +63,10 @@ echo"
 
 <script>
 function levelFunction() {
-	var level = "<?php echo $rownames[3] ?>";
-	if (level == "user") {
-	  document.getElementById('lvl1').checked = true;
-	} else if (level == "admin") {
-	   document.getElementById("lvl2").checked = true;
-	}
+	var level = "<?php echo $rownames['LEVEL'] ?>";
+	document.getElementById(level).selected = true;	
+
+	var unit = "<?php echo $rownames['UNIT_ID'] ?>";
+	document.getElementById(unit).selected = true;		
 }
 </script>	

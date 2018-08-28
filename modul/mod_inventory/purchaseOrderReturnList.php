@@ -10,9 +10,9 @@ $start_from = ($page-1) * $limit;
 					</div>
 					
 					<div class='search-container'>
-						<form method=POST action='albatsiq.php?module=search&act=purchaseOrderReturn&id=nomorpor' id='formSearch1' onsubmit='return searchfunc()'>
+						<form method=POST action='albatsiq.php?module=search&act=purchaseOrderReturn&id=nomorret' id='formSearch1' onsubmit='return searchfunc()'>
 						  <button type='submit'><i class='fa fa-search'></i></button>
-						  <input type='text' placeholder='Received No..' name='search' id='srch'>
+						  <input type='text' placeholder='Return No..' name='search' id='srch'>
 						</form>
 					 </div>
 					  <div class='search-container'>
