@@ -73,42 +73,42 @@
             $totamt='';
             $totamts='';
             // alert(tem[1]+"-"+tem[0]+"-"+tem[2]);
-            $sales = mysql_query("SELECT * FROM sales s INNER JOIN sales_detail sd on s.SALES_ID=sd.SALES_ID INNER JOIN item i on i.ITEM_ID=sd.ITEM_ID WHERE s.SALES_DATE BETWEEN '$tem[2]-$tem[0]-$tem[1]' AND '$temto[2]-$temto[0]-$temto[1]' LIMIT $start_from, $limit");
-            $result = mysql_query("SELECT * FROM sales s INNER JOIN sales_detail sd on s.SALES_ID=sd.SALES_ID INNER JOIN item i on i.ITEM_ID=sd.ITEM_ID WHERE s.SALES_DATE BETWEEN '$tem[2]-$tem[0]-$tem[1]' AND '$temto[2]-$temto[0]-$temto[1]'");
+            $por = mysql_query("SELECT * FROM item_transaction it INNER JOIN item_transaction_detail itd on it.TRANSACTION_NO=itd.TRANSACTION_NO INNER JOIN item i on i.ITEM_ID=itd.ITEM_ID WHERE it.TRANSACTION_CODE IN ('002','003') AND it.TRANSACTION_DATE BETWEEN '$tem[2]-$tem[0]-$tem[1]' AND '$temto[2]-$temto[0]-$temto[1]' LIMIT $start_from, $limit");
+            $result = mysql_query("SELECT * FROM item_transaction it INNER JOIN item_transaction_detail itd on it.TRANSACTION_NO=itd.TRANSACTION_NO INNER JOIN item i on i.ITEM_ID=itd.ITEM_ID WHERE it.TRANSACTION_CODE IN ('002','003') AND it.TRANSACTION_DATE BETWEEN '$tem[2]-$tem[0]-$tem[1]' AND '$temto[2]-$temto[0]-$temto[1]'");
            
             echo" 
-            <a href='export.php?tgl=$tem[1]&bulan=$tem[0]&tahun=$tem[2]&tgl1=$temto[1]&bulan1=$temto[0]&tahun1=$temto[2]'><button>Export Data ke Excel</button></a>
+            <a href='export2.php?tgl=$tem[1]&bulan=$tem[0]&tahun=$tem[2]&tgl1=$temto[1]&bulan1=$temto[0]&tahun1=$temto[2]'><button>Export Data ke Excel</button></a>
             <button onclick='closewdw()'>Close</button>    
                 <table width='100%'>
 
                     <tr>
-                        <th>Nomor Sales </th>
+                        <th>Nomor POR </th>
                         <th>Date</th>
                         <th>Item</th>
                         <th>Quantity</th>
                         <th>Total Amount</th>
                     </tr>";
-                while($sale = mysql_fetch_array($sales)){
-                    $amt = number_format($sale['TOTAL_AMOUNT'], 2, '.', ',');
-                    $tgl = explode("-",$sale['SALES_DATE']);
+                while($pemb = mysql_fetch_array($por)){
+                    $amt = number_format($pemb['HARGA'], 2, '.', ',');
+                    $tgl = explode("-",$pemb['TRANSACTION_DATE']);
                     $tanggal = date("$tgl[2]-$tgl[1]-$tgl[0]");
                     echo"
                     <tr>
-                        <td>$sale[SALES_ID]</td>
+                        <td>$pemb[TRANSACTION_NO]</td>
                         <td>$tanggal</td>
-                        <td>$sale[ITEM_NAME]</td>
-                        <td>$sale[QUANTITY]</td>
+                        <td>$pemb[ITEM_NAME]</td>
+                        <td>$pemb[QUANTITY]</td>
                         <td>Rp. $amt</td>
                     </tr>
                     ";
-                    $sumqtys += $sale['QUANTITY'];
-                    $sumamts += $sale['TOTAL_AMOUNT'];
+                    $sumqtys += $pemb['QUANTITY'];
+                    $sumamts += $pemb['HARGA'];
                     $totamts = number_format($sumamts, 2, '.', ',');
                 }
 
-                while($saleres = mysql_fetch_array($result)){
-                    $sumqty += $saleres['QUANTITY'];
-                    $sumamt += $saleres['TOTAL_AMOUNT'];
+                while($pembres = mysql_fetch_array($result)){
+                    $sumqty += $pembres['QUANTITY'];
+                    $sumamt += $pembres['HARGA'];
                     $totamt = number_format($sumamt, 2, '.', ',');
                 }
                 echo"
@@ -136,8 +136,8 @@
                         } else { // Jika buka page ke 1
                             $link_prev = ($page > 1) ? $page - 1 : 1;
                         echo"
-                            <li><a href='showSales.php?from=$from&to=$todate&page=1'>First</a></li>
-                            <li><a href='showSales.php?from=$from&to=$todate&page=$link_prev'>&laquo;</a></li>
+                            <li><a href='showPOR.php?from=$from&to=$todate&page=1'>First</a></li>
+                            <li><a href='showPOR.php?from=$from&to=$todate&page=$link_prev'>&laquo;</a></li>
                         ";
                         }
                     
@@ -152,7 +152,7 @@
                         $end_number = ($page < ($jumlah_page - $jumlah_number)) ? $page + $jumlah_number : $jumlah_page; // Untuk akhir link number
                         for ($i = $start_number; $i <= $end_number; $i++) {
                             $link_active = ($page == $i) ? 'class="active"' : '';
-                        echo" <li $link_active><a href='showSales.php?from=$from&to=$todate&page=".$i."'>".$i."</a></li>";
+                        echo" <li $link_active><a href='showPOR.php?from=$from&to=$todate&page=".$i."'>".$i."</a></li>";
                         }
                     
 
@@ -167,8 +167,8 @@
                         } else { // Jika bukan page terakhir
                             $link_next = ($page < $jumlah_page) ? $page + 1 : $jumlah_page;
                         echo"
-                            <li><a href='showSales.php?from=$from&to=$todate&page=$link_next'>&raquo;</a></li>
-                            <li><a href='showSales.php?from=$from&to=$todate&page=$jumlah_page'>Last</a></li>
+                            <li><a href='showPOR.php?from=$from&to=$todate&page=$link_next'>&raquo;</a></li>
+                            <li><a href='showPOR.php?from=$from&to=$todate&page=$jumlah_page'>Last</a></li>
                         ";
                         }
             echo"         

@@ -98,7 +98,7 @@ switch($_GET['act']){
         for($i=0;$i<=$jmlcell;$i++)
         {
             if($check[$i] == 1){
-               mysql_query ("Insert sales_detail (SALES_ID,ITEM_ID,QUANTITY,SATUAN,HARGA_JUAL,DISCOUNT_AMOUNT,TOTAL_AMOUNT,REFERENCE_ID)  values ('$slretnumber','$itemIDs[$i]','$qty[$i]','$satuan[$i]','$harga[$i]','$dsc[$i]','-$total[$i]','$ref')");
+               mysql_query ("Insert sales_detail (SALES_ID,ITEM_ID,QUANTITY,SATUAN,HARGA_JUAL,DISCOUNT_AMOUNT,TOTAL_AMOUNT,REFERENCE_ID)  values ('$slretnumber','$itemIDs[$i]','-$qty[$i]','$satuan[$i]','$harga[$i]','$dsc[$i]','-$total[$i]','$ref')");
                 
                 if (isset($loc)){
                     $cekbalance = mysql_query("SELECT * FROM stock_item WHERE LOC_ID='$loc' and ITEM_ID='$itemIDs[$i]'");

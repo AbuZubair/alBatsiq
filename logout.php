@@ -3,6 +3,7 @@
 <head>
   <title>LOGOUT </title>
 <link href='style.css' rel='stylesheet' type='text/css'>
+<link href='' rel='shortcut icon'>
 </head>
 
 <body>

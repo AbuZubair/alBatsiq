@@ -21,11 +21,11 @@
         temto = resto.split("/");
    // alert(tem[1]+"-"+tem[0]+"-"+tem[2]);
 
-    if(res == '' || resto == ''){
+   if(res == '' || resto == ''){
        return;
-    } else {
-    window.open("showSales.php?from="+ res+"&to="+resto+"&page=1", "popuppage");
-    }
+   }else{
+    window.open("showPOR.php?from="+ res+"&to="+resto+"&page=1", "popuppage");
+   }
    
     }
 </script>
@@ -69,8 +69,7 @@
 
 </head>
 <body>
-<center>
-<div>
+    <center>
         <table border="2">
             <tr>
                 <td>From</td>
@@ -87,7 +86,6 @@
         </table>
 
         <button id="btnok" onclick="preview()">Preview</button>
-</div>
-</center>
+    </center>
 </body>
 </html>

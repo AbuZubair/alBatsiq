@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Login</title>
+<link href='' rel='shortcut icon'>
 <link rel="stylesheet" href="style.css">
 </head>
 

@@ -314,7 +314,7 @@
 		for($i=0;$i<=$jmlcell;$i++)
 		{
 			if($check[$i] == 1){
-				mysql_query ("Insert into item_transaction_detail (TRANSACTION_NO,ITEM_ID,QUANTITY,SATUAN,KONVERSI,HARGA,REFERENCE_NO)  values ('$retnumber','$itemIDs[$i]','$qty[$i]','$satuan[$i]','$konversi[$i]','$harga[$i]','$ref')");
+				mysql_query ("Insert into item_transaction_detail (TRANSACTION_NO,ITEM_ID,QUANTITY,SATUAN,KONVERSI,HARGA,REFERENCE_NO)  values ('$retnumber','$itemIDs[$i]','-$qty[$i]','$satuan[$i]','$konversi[$i]','-$harga[$i]','$ref')");
 				
 				if (isset($loc)){
 					$cekbalance = mysql_query("SELECT * FROM stock_item WHERE LOC_ID='$loc' and ITEM_ID='$itemIDs[$i]'");
@@ -344,9 +344,9 @@
 		//echo $numrowcek;
 		
 		if($numrowcek == 0){
-			mysql_query("insert into item_transaction (TRANSACTION_NO,TRANSACTION_CODE,TRANSACTION_DATE,CHARGE_AMOUNT,NOTE,REFERENCE_NO,IS_COMPLETE,TO_LOC_ID,FROM_LOC_ID)  values ('$retnumber','003','$tglskg','$sum','$note','$ref',1,NULL,'$loc')");
+			mysql_query("insert into item_transaction (TRANSACTION_NO,TRANSACTION_CODE,TRANSACTION_DATE,CHARGE_AMOUNT,NOTE,REFERENCE_NO,IS_COMPLETE,TO_LOC_ID,FROM_LOC_ID)  values ('$retnumber','003','$tglskg','-$sum','$note','$ref',1,NULL,'$loc')");
 		} else{
-			mysql_query("insert into item_transaction (TRANSACTION_NO,TRANSACTION_CODE,TRANSACTION_DATE,CHARGE_AMOUNT,NOTE,REFERENCE_NO,IS_COMPLETE,TO_LOC_ID,FROM_LOC_ID)  values ('$retnumber','003','$tglskg','$sum','$note','$ref',0,NULL,'$loc')");
+			mysql_query("insert into item_transaction (TRANSACTION_NO,TRANSACTION_CODE,TRANSACTION_DATE,CHARGE_AMOUNT,NOTE,REFERENCE_NO,IS_COMPLETE,TO_LOC_ID,FROM_LOC_ID)  values ('$retnumber','003','$tglskg','-$sum','$note','$ref',0,NULL,'$loc')");
 		}
 		header('location:../../albatsiq.php?module=inventory&act=purchaseOrderReturnList&page=1');	 
 		
